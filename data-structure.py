@@ -1,6 +1,6 @@
 import random
 
-def selection_sort(A):
+def selection_sort(A): # 선택정렬
     n = len(A)
     for i in range(n - 1):
         least = i
@@ -13,7 +13,7 @@ def selection_sort(A):
     # 정렬이 끝난 후 최종 결과 출력
     print("최종 정렬 결과:", A)
 
-def main():
+def main(): # 시작할때마다 이화면 띄우기 
     while True:
         print("""
         ***********************************
