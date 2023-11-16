@@ -9,7 +9,19 @@ def selection_sort(A): # 선택정렬
                 least = j
         A[i], A[least] = A[least], A[i]
         print("Step", i + 1, "=", A)
-
+    # 정렬이 끝난 후 최종 결과 출력
+    print("최종 정렬 결과:", A)
+    
+def insertion_sort(A): # 삽입정렬
+    n = len(A)
+    for i in range(1,n) :
+        key = A[i]
+        j = i-1
+        while j >= 0 and A[j] > key :
+            A[j+1] = A[j]
+            j -= 1
+        A[j+1] = key
+        print("Step", i + 1, "=", A)
     # 정렬이 끝난 후 최종 결과 출력
     print("최종 정렬 결과:", A)
 
@@ -39,10 +51,16 @@ def main(): # 시작할때마다 이화면 띄우기
         elif n == 1:
             # 0 이상 100 이하 범위에서 중복되지 않는 25개의 랜덤 정수를 생성하여 리스트에 저장
             random_list = random.sample(range(101), 25)
-            print("원본 리스트:", random_list)
+            print("선택정렬을 실행합니다")
+            print("원본 리스트:", random_list) # 원본 리스트 출력
+            selection_sort(random_list)  # 선택 정렬 함수 호출
+        elif n == 2:
+             # 0 이상 100 이하 범위에서 중복되지 않는 25개의 랜덤 정수를 생성하여 리스트에 저장
+            random_list = random.sample(range(101), 25)
+            print("삽입정렬을 실행합니다")
+            print("원본 리스트:", random_list) # 원본 리스트 출력
+            insertion_sort(random_list) # 삽입 정렬 함수 호출
             
-            # 선택 정렬 함수 호출
-            selection_sort(random_list)
 
 if __name__ == "__main__":
     main()
