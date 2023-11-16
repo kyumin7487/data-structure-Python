@@ -24,6 +24,21 @@ def insertion_sort(A): # 삽입정렬
         print("Step", i + 1, "=", A)
     # 정렬이 끝난 후 최종 결과 출력
     print("최종 정렬 결과:", A)
+    
+def bubble_sort(A): # 버블정렬
+    n = len(A)
+    for i in range(n-1, 0, -1) :
+        bChanged = False
+        for j in range(i) :
+            if A[j] > A[j+1] :
+                A[j], A[j+1] = A[j+1], A[j]
+                bChanged = True
+        if not bChanged:
+            break
+        print("Step", n - i, "=", A)
+     # 정렬이 끝난 후 최종 결과 출력
+    print("최종 정렬 결과:", A)
+
 
 def main(): # 시작할때마다 이화면 띄우기 
     while True:
@@ -48,19 +63,27 @@ def main(): # 시작할때마다 이화면 띄우기
         if n == 7:
             print("프로그램을 종료합니다.")
             break
-        elif n == 1:
+        
+        elif n == 1: # 선택정렬
             # 0 이상 100 이하 범위에서 중복되지 않는 25개의 랜덤 정수를 생성하여 리스트에 저장
             random_list = random.sample(range(101), 25)
             print("선택정렬을 실행합니다")
             print("원본 리스트:", random_list) # 원본 리스트 출력
             selection_sort(random_list)  # 선택 정렬 함수 호출
-        elif n == 2:
+            
+        elif n == 2: # 삽입정렬
              # 0 이상 100 이하 범위에서 중복되지 않는 25개의 랜덤 정수를 생성하여 리스트에 저장
             random_list = random.sample(range(101), 25)
             print("삽입정렬을 실행합니다")
             print("원본 리스트:", random_list) # 원본 리스트 출력
             insertion_sort(random_list) # 삽입 정렬 함수 호출
-            
+        
+        elif n == 3: # 버블정렬
+             # 0 이상 100 이하 범위에서 중복되지 않는 25개의 랜덤 정수를 생성하여 리스트에 저장
+            random_list = random.sample(range(101), 25)
+            print("버블정렬을 실행합니다")
+            print("원본 리스트:", random_list) # 원본 리스트 출력
+            bubble_sort(random_list) # 삽입 정렬 함수 호출
 
 if __name__ == "__main__":
     main()
