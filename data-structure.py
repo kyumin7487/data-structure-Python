@@ -207,7 +207,12 @@ def main():
         ***********************************
         """)
 
-        n = int(input("원하시는 정렬의 번호를 선택해 주세요 (종료하려면 8을 입력하세요): "))
+        try:
+            n = int(input("원하시는 정렬의 번호를 선택해 주세요 (종료하려면 8을 입력하세요): "))
+        except ValueError:
+            print("<번호오류>")
+            print("잘못된 입력입니다. 숫자를 입력하세요.")
+            continue
 
         if n == 8:
             print("프로그램을 종료합니다.")
@@ -266,6 +271,8 @@ def main():
             print("원본 리스트:", random_list)  # 원본 리스트 출력
             heap_sort(random_list)  # 힙2 정렬 함수 호출
             print("최종 정렬 결과:", random_list)  # 최종 결과 출력
-
+        else:
+            print("<번호오류>")
+            print("잘못된 입력입니다. 1부터 8까지의 숫자 중 하나를 입력하세요.")
 if __name__ == "__main__":
     main()
