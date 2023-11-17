@@ -108,6 +108,7 @@ def merge(A, left, mid, right):
     S += 1
 
 def merge_sort(A, left, right):
+    # 합병정렬 알고리즘 구현
     print("merge_sort (", left, ",", right, ")")
     if left < right:
         mid = (left + right) // 2
@@ -117,6 +118,31 @@ def merge_sort(A, left, right):
     # 최종 결과 출력
     if left == 0 and right == len(A) - 1:
         print("최종 정렬 결과:", A)
+
+def heapify(arr, n, i) :
+    # n = arr의 길이, i = 루트노드 인덱스
+    largest = i
+    l = 2*i # 왼쪽 자식 인덱스
+    r = 2*i +1 # 오른쪽 자식 인덱스
+    # 루트(i)와 두 자식 중 가장 큰 요소 인덱스 구하기
+    if l <= n and arr[i] < arr[l]:largest = 1
+    if r <= n and arr[largest] < arr[r]: largest = r
+    # 자식노드 처리하기
+    if largest != i :
+        arr[i], arr[largest] = arr[largest],arr[i]
+        heapify(arr, n, largest)
+        
+def heapSort(arr) :
+    n = len(arr) - 1
+    # 앞쪽요소 최대힙화
+    for i in range (n/ 12, 0, -1) :
+        heapify(arr, n, i)
+        print("i =", i, arr)
+    # 루트와 마지막요소 교환 후 다시 다운 힙
+    for i in range (n-1, 0, -1) :
+        arr[i+1], arr[1] = arr[1], arr[i+1]
+        heapify(arr, i, 1)
+        print("¡ =", i, arr)
 
 def main():
     while True:
@@ -135,7 +161,7 @@ def main():
         ***********************************
         """)
 
-        n = int(input("원하시는 정렬의 번호를 선택해 주세요 (종료하려면 7을 입력하세요): "))
+        n = int(input("원하시는 정렬의 번호를 선택해 주세요 (종료하려면 8을 입력하세요): "))
 
         if n == 8:
             print("프로그램을 종료합니다.")
