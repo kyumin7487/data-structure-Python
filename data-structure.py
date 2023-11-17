@@ -119,30 +119,37 @@ def merge_sort(A, left, right):
     if left == 0 and right == len(A) - 1:
         print("최종 정렬 결과:", A)
 
-def heapify(arr, n, i) :
+def heapify(arr, n, i): 
     # n = arr의 길이, i = 루트노드 인덱스
     largest = i
-    l = 2*i # 왼쪽 자식 인덱스
-    r = 2*i +1 # 오른쪽 자식 인덱스
-    # 루트(i)와 두 자식 중 가장 큰 요소 인덱스 구하기
-    if l <= n and arr[i] < arr[l]:largest = 1
-    if r <= n and arr[largest] < arr[r]: largest = r
-    # 자식노드 처리하기
-    if largest != i :
-        arr[i], arr[largest] = arr[largest],arr[i]
+    l = 2 * i + 1
+    r = 2 * i + 2
+
+    if l < n and arr[l] > arr[largest]:
+        largest = l
+
+    if r < n and arr[r] > arr[largest]:
+        largest = r
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
         heapify(arr, n, largest)
-        
-def heapSort(arr) :
-    n = len(arr) - 1
+
+def heapSort(arr):
+    #힙1정렬 알고리즘 구현
+    n = len(arr)
     # 앞쪽요소 최대힙화
-    for i in range (n/ 12, 0, -1) :
+    for i in range(n // 2, -1, -1):
         heapify(arr, n, i)
         print("i =", i, arr)
     # 루트와 마지막요소 교환 후 다시 다운 힙
-    for i in range (n-1, 0, -1) :
-        arr[i+1], arr[1] = arr[1], arr[i+1]
-        heapify(arr, i, 1)
+    for i in range(n - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
         print("¡ =", i, arr)
+    
+    # 최종 결과 출력
+    print("최종 정렬 결과:", arr)
 
 def main():
     while True:
@@ -155,15 +162,14 @@ def main():
         *** 3. 버블(bubble) 정렬        ***
         *** 4. 퀵(quick) 정렬           ***
         *** 5. 합병(merge) 정렬         ***
-        *** 6. 힙1(heap) 정렬            ***
-        *** 7. 힙2(heap) 정렬            ***
-        *** 8. 종료(quit)               ***
+        *** 6. 힙(heap) 정렬            ***
+        *** 7. 종료(quit)               ***
         ***********************************
         """)
 
-        n = int(input("원하시는 정렬의 번호를 선택해 주세요 (종료하려면 8을 입력하세요): "))
+        n = int(input("원하시는 정렬의 번호를 선택해 주세요 (종료하려면 7을 입력하세요): "))
 
-        if n == 8:
+        if n == 7:
             print("프로그램을 종료합니다.")
             break
 
@@ -205,6 +211,13 @@ def main():
             global sorted_list
             sorted_list = [0] * len(random_list)  # 병합을 위한 보조 리스트 초기화
             merge_sort(random_list, 0, len(random_list) - 1)  # 합병정렬 함수 호출
+
+        elif n == 6:
+            # 0 이상 100 이하 범위에서 중복되지 않는 25개의 랜덤 정수를 생성하여 리스트에 저장
+            random_list = random.sample(range(101), 25)
+            print("힙1정렬을 실행합니다")
+            print("원본 리스트:", random_list)  # 원본 리스트 출력
+            heapSort(random_list)  # 힙1정렬 함수 호출
 
 if __name__ == "__main__":
     main()
