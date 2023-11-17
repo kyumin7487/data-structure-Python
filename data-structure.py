@@ -1,6 +1,6 @@
 import random
 
-S = 1 # 퀵정열 하는데 문제가 자꾸 생겨서 여기에다가 S 잡았어요
+S = 1  # 퀵정렬에 사용되는 변수
 
 def selection_sort(A): 
     # 선택 정렬 알고리즘 구현
@@ -11,7 +11,7 @@ def selection_sort(A):
             if A[j] < A[least]:
                 least = j
         A[i], A[least] = A[least], A[i]
-        print("단계", i + 1, "=", A)
+        print("Step", i + 1, "=", A)
     # 정렬이 끝난 후 최종 결과 출력
     print("최종 정렬 결과:", A)
 
@@ -25,7 +25,7 @@ def insertion_sort(A):
             A[j + 1] = A[j]
             j -= 1
         A[j + 1] = key
-        print("단계", i + 1, "=", A)
+        print("Step", i + 1, "=", A)
     # 정렬이 끝난 후 최종 결과 출력
     print("최종 정렬 결과:", A)
 
@@ -47,6 +47,7 @@ def bubble_sort(A):
 def quick_sort(A, left, right):
     # 퀵 정렬 알고리즘 구현
     global S
+    S = 1  # 전역 변수 S 초기화
     print("quick_sort(A,", left, right, ")")
     if left < right:  
         i = left + 1
@@ -64,13 +65,58 @@ def quick_sort(A, left, right):
         print_qs(A)
         quick_sort(A, left, j - 1)
         quick_sort(A, j + 1, right)
+    # 최종 결과 출력
+    if left == 0 and right == len(A) - 1:
+        print("최종 정렬 결과:", A)
 
 def print_qs(A):
     global S
-    print("단계", S, "=", A)
+    print("Step", S, "=", A)
     S += 1
-    # 정렬이 끝난 후 최종 결과 출력
-    print("최종 정렬 결과:", A)
+
+def merge(A, left, mid, right):
+    print("merge (", left, ",", mid, ",", right, ")")
+    global S
+    global sorted_list
+    i = left
+    j = mid + 1
+    k = left
+
+    while i <= mid and j <= right:
+        if A[i] <= A[j]:
+            sorted_list[k] = A[i]
+            i += 1
+        else:
+            sorted_list[k] = A[j]
+            j += 1
+        k += 1
+
+    # 남은 요소들 복사 (왼쪽 서브리스트)
+    while i <= mid:
+        sorted_list[k] = A[i]
+        i += 1
+        k += 1
+
+    # 남은 요소들 복사 (오른쪽 서브리스트)
+    while j <= right:
+        sorted_list[k] = A[j]
+        j += 1
+        k += 1
+
+    A[left:right + 1] = sorted_list[left:right + 1]
+    print("Step", S, "=", sorted_list)
+    S += 1
+
+def merge_sort(A, left, right):
+    print("merge_sort (", left, ",", right, ")")
+    if left < right:
+        mid = (left + right) // 2
+        merge_sort(A, left, mid)
+        merge_sort(A, mid + 1, right)
+        merge(A, left, mid, right)
+    # 최종 결과 출력
+    if left == 0 and right == len(A) - 1:
+        print("최종 정렬 결과:", A)
 
 def main():
     while True:
@@ -98,29 +144,40 @@ def main():
             # 0 이상 100 이하 범위에서 중복되지 않는 25개의 랜덤 정수를 생성하여 리스트에 저장
             random_list = random.sample(range(101), 25)
             print("선택정렬을 실행합니다")
-            print("원본 리스트:", random_list) # 원본 리스트 출력
-            selection_sort(random_list) # 선택정렬 함수 호출
+            print("원본 리스트:", random_list)  # 원본 리스트 출력
+            selection_sort(random_list)  # 선택정렬 함수 호출
 
         elif n == 2:
             # 0 이상 100 이하 범위에서 중복되지 않는 25개의 랜덤 정수를 생성하여 리스트에 저장
             random_list = random.sample(range(101), 25)
             print("삽입정렬을 실행합니다")
-            print("원본 리스트:", random_list) # 원본 리스트 출력
-            insertion_sort(random_list) # 삽입정렬 함수 호출
+            print("원본 리스트:", random_list)  # 원본 리스트 출력
+            insertion_sort(random_list)  # 삽입정렬 함수 호출
 
         elif n == 3:
             # 0 이상 100 이하 범위에서 중복되지 않는 25개의 랜덤 정수를 생성하여 리스트에 저장
             random_list = random.sample(range(101), 25)
             print("버블정렬을 실행합니다")
-            print("원본 리스트:", random_list)# 원본 리스트 출력
-            bubble_sort(random_list) # 버블정렬 함수 호출
+            print("원본 리스트:", random_list)  # 원본 리스트 출력
+            bubble_sort(random_list)  # 버블정렬 함수 호출
 
         elif n == 4:
             # 0 이상 100 이하 범위에서 중복되지 않는 25개의 랜덤 정수를 생성하여 리스트에 저장
             random_list = random.sample(range(101), 25)
             print("퀵정렬을 실행합니다")
-            print("원본 리스트:", random_list)# 원본 리스트 출력
-            quick_sort(random_list, 0, len(random_list) - 1) # 퀵정렬 함수 호출
+            print("원본 리스트:", random_list)  # 원본 리스트 출력
+            quick_sort(random_list, 0, len(random_list) - 1)  # 퀵정렬 함수 호출
+
+        elif n == 5:
+            # 0 이상 100 이하 범위에서 중복되지 않는 25개의 랜덤 정수를 생성하여 리스트에 저장
+            random_list = random.sample(range(101), 25)
+            print("합병정렬을 실행합니다")
+            print("원본 리스트:", random_list)  # 원본 리스트 출력
+            global S
+            S = 1  # 합병정렬에 사용되는 전역 변수 S 초기화
+            global sorted_list
+            sorted_list = [0] * len(random_list)  # 병합을 위한 보조 리스트 초기화
+            merge_sort(random_list, 0, len(random_list) - 1)  # 합병정렬 함수 호출
 
 if __name__ == "__main__":
     main()
