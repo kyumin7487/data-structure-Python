@@ -40,7 +40,7 @@ def bubble_sort(A):
                 bChanged = True
         if not bChanged:
             break
-        print("단계", n - i, "=", A)
+        print("Step", n - i, "=", A)
     # 정렬이 끝난 후 최종 결과 출력
     print("최종 정렬 결과:", A)
 
@@ -136,7 +136,7 @@ def heapify(arr, n, i):
         heapify(arr, n, largest)
 
 def heapSort(arr):
-    #힙1정렬 알고리즘 구현
+    # 힙1정렬 알고리즘 구현
     n = len(arr)
     # 앞쪽요소 최대힙화
     for i in range(n // 2, -1, -1):
@@ -151,6 +151,45 @@ def heapSort(arr):
     # 최종 결과 출력
     print("최종 정렬 결과:", arr)
 
+def heappush(heap, n):
+    heap.append(n)
+    i = len(heap) - 1  # n이 삽입된 위치
+    while i != 1 and n > heap[i // 2]:
+        heap[i] = heap[i // 2]
+        i //= 2
+    heap[i] = n
+
+def heappop(heap):
+    size = len(heap) - 1
+    if size == 0:
+        return None  # 공백트리
+    p = 1
+    i = 2  # p는 부모인덱스, 1는 자식인덱스
+    root = heap[1]  # 삭제할 노드
+    last = heap[size]  # 마지막 노드
+    while i <= size:
+        if i < size and heap[i] < heap[i + 1]:
+            i += 1  # 자식 중 더 큰값 선택
+        if last >= heap[i]:
+            break
+        heap[p] = heap[i]  # 자식을 부모위치로
+        p = i  # 부모위치가 자식위치로
+        i *= 2  # 자식위치 이동
+    heap[p] = last
+    heap.pop()
+    return root
+
+def heap_sort(data):
+    # 힙2 정렬 알고리즘 구현
+    heap = [0]
+    # 모든 데이터를 최대힙에 삽입
+    for e in data:
+        heappush(heap, e)
+    # 모든 데이터를 힙에서 꺼내 역순으로 저장
+    for i in range(1, len(data) + 1):
+        data[-i] = heappop(heap)
+        print("Step", i, "=", data)
+
 def main():
     while True:
         print("""
@@ -162,14 +201,15 @@ def main():
         *** 3. 버블(bubble) 정렬        ***
         *** 4. 퀵(quick) 정렬           ***
         *** 5. 합병(merge) 정렬         ***
-        *** 6. 힙(heap) 정렬            ***
-        *** 7. 종료(quit)               ***
+        *** 6. 힙1(heap) 정렬           ***
+        *** 7. 힙2(heap) 정렬           ***
+        *** 8. 종료(quit)               ***
         ***********************************
         """)
 
-        n = int(input("원하시는 정렬의 번호를 선택해 주세요 (종료하려면 7을 입력하세요): "))
+        n = int(input("원하시는 정렬의 번호를 선택해 주세요 (종료하려면 8을 입력하세요): "))
 
-        if n == 7:
+        if n == 8:
             print("프로그램을 종료합니다.")
             break
 
@@ -218,6 +258,14 @@ def main():
             print("힙1정렬을 실행합니다")
             print("원본 리스트:", random_list)  # 원본 리스트 출력
             heapSort(random_list)  # 힙1정렬 함수 호출
+            
+        elif n == 7:
+            # 0 이상 100 이하 범위에서 중복되지 않는 25개의 랜덤 정수를 생성하여 리스트에 저장
+            random_list = random.sample(range(101), 25)
+            print("힙2 정렬을 실행합니다")
+            print("원본 리스트:", random_list)  # 원본 리스트 출력
+            heap_sort(random_list)  # 힙2 정렬 함수 호출
+            print("최종 정렬 결과:", random_list)  # 최종 결과 출력
 
 if __name__ == "__main__":
     main()
