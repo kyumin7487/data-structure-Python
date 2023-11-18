@@ -190,6 +190,32 @@ def heap_sort(data):
         data[-i] = heappop(heap)
         print("Step", i, "=", data)
 
+def heap_sort(arr, version):
+    if version == 1:
+        n = len(arr)
+        for i in range(n // 2, -1, -1):
+            heapify(arr, n, i)
+            print("i =", i, arr)
+
+        for i in range(n - 1, 0, -1):
+            arr[i], arr[0] = arr[0], arr[i]
+            heapify(arr, i, 0)
+            print("¡ =", i, arr)
+
+        print("최종 정렬 결과 (Heap1):", arr)
+
+    elif version == 2:
+        heap = [0]
+        for e in arr:
+            heappush(heap, e)
+
+        for i in range(1, len(arr) + 1):
+            arr[-i] = heappop(heap)
+            print("Step", i, "=", arr)
+
+        print("최종 정렬 결과 (Heap2):", arr)
+
+
 def main():
     while True:
         print("""
@@ -201,20 +227,18 @@ def main():
         *** 3. 버블(bubble) 정렬        ***
         *** 4. 퀵(quick) 정렬           ***
         *** 5. 합병(merge) 정렬         ***
-        *** 6. 힙1(heap) 정렬           ***
-        *** 7. 힙2(heap) 정렬           ***
-        *** 8. 종료(quit)               ***
+        *** 6. 힙(heap) 정렬           *** 
+        *** 7. 종료(quit)               ***
         ***********************************
         """)
 
         try:
-            n = int(input("원하시는 정렬의 번호를 선택해 주세요 (종료하려면 8을 입력하세요): "))
+            n = int(input("원하시는 정렬의 번호를 선택해 주세요 (종료하려면 7을 입력하세요): "))
         except ValueError:
-            print("<번호오류>")
             print("잘못된 입력입니다. 숫자를 입력하세요.")
             continue
 
-        if n == 8:
+        if n == 7:
             print("프로그램을 종료합니다.")
             break
 
@@ -258,19 +282,11 @@ def main():
             merge_sort(random_list, 0, len(random_list) - 1)  # 합병정렬 함수 호출
 
         elif n == 6:
-            # 0 이상 100 이하 범위에서 중복되지 않는 25개의 랜덤 정수를 생성하여 리스트에 저장
             random_list = random.sample(range(101), 25)
-            print("힙1정렬을 실행합니다")
-            print("원본 리스트:", random_list)  # 원본 리스트 출력
-            heapSort(random_list)  # 힙1정렬 함수 호출
-            
-        elif n == 7:
-            # 0 이상 100 이하 범위에서 중복되지 않는 25개의 랜덤 정수를 생성하여 리스트에 저장
-            random_list = random.sample(range(101), 25)
-            print("힙2 정렬을 실행합니다")
-            print("원본 리스트:", random_list)  # 원본 리스트 출력
-            heap_sort(random_list)  # 힙2 정렬 함수 호출
-            print("최종 정렬 결과:", random_list)  # 최종 결과 출력
+            print("힙 정렬을 실행합니다")
+            print("원본 리스트:", random_list)
+            heap_sort(list(random_list), version=1)
+            heap_sort(list(random_list), version=2)
         else:
             print("<번호오류>")
             print("잘못된 입력입니다. 1부터 8까지의 숫자 중 하나를 입력하세요.")
